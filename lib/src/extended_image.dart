@@ -57,13 +57,13 @@ class ExtendedImage extends StatefulWidget {
     this.clearMemoryCacheWhenDispose = false,
     this.extendedImageGestureKey,
     this.isAntiAlias = false,
+    this.handleLoadingProgress = false,
   })  : assert(image != null),
         assert(constraints == null || constraints.debugAssertIsValid()),
         constraints = (width != null || height != null)
             ? constraints?.tighten(width: width, height: height) ??
                 BoxConstraints.tightFor(width: width, height: height)
             : constraints,
-        handleLoadingProgress = false,
         super(key: key);
 
   ExtendedImage.network(
@@ -1032,9 +1032,9 @@ class _ExtendedImageState extends State<ExtendedImage>
         !(_loadState == LoadState.completed &&
             widget.mode == ExtendedImageMode.gesture)) {
       current = ExtendedImageSlidePageHandler(
-        current,
-        _slidePageState,
-        widget.heroBuilderForSlidingPage,
+        child: current,
+        extendedImageSlidePageState: _slidePageState,
+        heroBuilderForSlidingPage: widget.heroBuilderForSlidingPage,
       );
     }
 
